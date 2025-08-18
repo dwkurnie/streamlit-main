@@ -47,30 +47,15 @@ input_data = np.array([[Administrative, Administrative_Duration, Informational, 
                         VisitorType_encoded, Weekend_encoded]])
 
 if st.button("Prediksi"):
-    st.subheader("Hasil Prediksi")
+    st.subheader("Hasil Prediksi dari Semua Model")
 
     models = {
         "Random Forest": rf_model,
         "XGBoost": xgb_model,
     }
 
-    yes_count = 0
-    no_count = 0
-
     for name, model in models.items():
         pred = model.predict(input_data)[0]
         proba = model.predict_proba(input_data)[0][1] * 100
         result = "Yes" if pred == 1 else "No"
-
-        if result == "Yes":
-            yes_count += 1
-        else:
-            no_count += 1
-
-        st.write(f"**{name}** → {result} dengan persentase ({proba:.2f}%)")
-
-    # Kesimpulan
-    if yes_count > no_count:
-        st.success("Kesimpulan: Konsumen berkemungkinan besar untuk melanjutkan pembelian.")
-    else:
-        st.error("Kesimpulan: Konsumen berkemungkinan besar untuk **tidak** melanjutkan pembelian.")
+        st.write(f"**{name}** → {result} ({proba:.2f}%)")
