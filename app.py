@@ -3,9 +3,12 @@ import joblib
 import numpy as np
 import pandas as pd
 
-# Load models
-rf_model = joblib.load("RF-Model8.pkl")
-xgb_model = joblib.load("XGB-Model8.pkl")
+# Load model
+@st.cache_resource
+def load_model():
+    return joblib.load("XGB-Model8.pkl")
+
+model = load_model()
 
 st.title("Prediksi Revenue E-Commerce")
 
@@ -40,22 +43,13 @@ Month_encoded = Month_map[Month]
 VisitorType_encoded = VisitorType_map[VisitorType]
 Weekend_encoded = Weekend_map[Weekend]
 
-# Data input untuk model
-input_data = np.array([[Administrative, Administrative_Duration, Informational, Informational_Duration,
-                        ProductRelated, ProductRelated_Duration, BounceRates, ExitRates, PageValues,
-                        SpecialDay, Month_encoded, OperatingSystems, Browser, Region, TrafficType,
-                        VisitorType_encoded, Weekend_encoded]])
+# Button untuk prediksi
+if st.button("Prediksi Revenue"):
+    features = np.array([[Administrative, Administrative_Duration, Informational, Informational_Duration,
+                          ProductRelated, ProductRelated_Duration, BounceRates, ExitRates, PageValues,
+                          SpecialDay, Month_encoded, OperatingSystems, Browser, Region, TrafficType,
+                          VisitorType_encoded, Weekend_encoded]])
 
-if st.button("Prediksi"):
-    st.subheader("Hasil Prediksi dari Semua Model")
-
-    models = {
-        "Random Forest": rf_model,
-        "XGBoost": xgb_model,
-    }
-
-    for name, model in models.items():
-        pred = model.predict(input_data)[0]
-        proba = model.predict_proba(input_data)[0][1] * 100
-        result = "Yes" if pred == 1 else "No"
-        st.write(f"**{name}** → {result} ({proba:.2f}%)")
+    prediction = model.predict(features)
+    result = "Yes" if prediction[0] == 1 else "No"
+    st.success(f"Hasil Prediksi Revenue: {result}")
