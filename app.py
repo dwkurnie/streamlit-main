@@ -13,26 +13,29 @@ model = load_model()
 st.title("Prediksi Revenue E-Commerce")
 
 st.write("Masukkan nilai untuk setiap fitur:")
+col1, col2 = st.columns(2)
 
 # === Input Features ===
-Administrative = st.number_input("Administrative", min_value=0, value=0)
-Administrative_Duration = st.number_input("Administrative_Duration", min_value=0.0, value=0.0)
-Informational = st.number_input("Informational", min_value=0, value=0)
-Informational_Duration = st.number_input("Informational_Duration", min_value=0.0, value=0.0)
-ProductRelated = st.number_input("ProductRelated", min_value=0, value=0)
-ProductRelated_Duration = st.number_input("ProductRelated_Duration", min_value=0.0, value=0.0)
-BounceRates = st.number_input("BounceRates", min_value=0.0, max_value=1.0, value=0.0)
-ExitRates = st.number_input("ExitRates", min_value=0.0, max_value=1.0, value=0.0)
-PageValues = st.number_input("PageValues", min_value=0.0, value=0.0)
-SpecialDay = st.number_input("SpecialDay", min_value=0.0, max_value=1.0, value=0.0)
+with col1:
+    Administrative = st.number_input("Administrative", min_value=0, value=0)
+    Administrative_Duration = st.number_input("Administrative_Duration", min_value=0.0, value=0.0)
+    Informational = st.number_input("Informational", min_value=0, value=0)
+    Informational_Duration = st.number_input("Informational_Duration", min_value=0.0, value=0.0)
+    ProductRelated = st.number_input("ProductRelated", min_value=0, value=0)
+    ProductRelated_Duration = st.number_input("ProductRelated_Duration", min_value=0.0, value=0.0)
+    BounceRates = st.number_input("BounceRates", min_value=0.0, max_value=1.0, value=0.0)
+    ExitRates = st.number_input("ExitRates", min_value=0.0, max_value=1.0, value=0.0)
+    PageValues = st.number_input("PageValues", min_value=0.0, value=0.0)
 
-Month = st.selectbox("Month", ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"])
-OperatingSystems = st.number_input("OperatingSystems", min_value=1, max_value=8, value=1)
-Browser = st.number_input("Browser", min_value=1, max_value=13, value=1)
-Region = st.number_input("Region", min_value=1, max_value=9, value=1)
-TrafficType = st.number_input("TrafficType", min_value=1, max_value=20, value=1)
-VisitorType = st.selectbox("VisitorType", ["Returning_Visitor", "New_Visitor", "Other"])
-Weekend = st.selectbox("Weekend", ["True", "False"])
+with col2:
+    SpecialDay = st.number_input("SpecialDay", min_value=0.0, max_value=1.0, value=0.0)
+    Month = st.selectbox("Month", ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"])
+    OperatingSystems = st.number_input("OperatingSystems", min_value=1, max_value=8, value=1)
+    Browser = st.number_input("Browser", min_value=1, max_value=13, value=1)
+    Region = st.number_input("Region", min_value=1, max_value=9, value=1)
+    TrafficType = st.number_input("TrafficType", min_value=1, max_value=20, value=1)
+    VisitorType = st.selectbox("VisitorType", ["Returning_Visitor", "New_Visitor", "Other"])
+    Weekend = st.selectbox("Weekend", ["True", "False"])
 
 # Encode categorical features
 Month_map = {'Jan':1,'Feb':2,'Mar':3,'Apr':4,'May':5,'June':6,'Jul':7,'Aug':8,'Sep':9,'Oct':10,'Nov':11,'Dec':12}
