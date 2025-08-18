@@ -51,12 +51,12 @@ if st.button("Prediksi Revenue"):
                           VisitorType_encoded, Weekend_encoded]])
 
     prediction = model.predict(features)
-result = "Yes" if prediction[0] == 1 else "No"
+    result = "Yes" if prediction[0] == 1 else "No"
 
-# Tentukan kata "tidak" hanya jika hasil = No
-tidak = "" if result == "Yes" else "tidak"
+    # Tentukan kata "tidak" hanya jika hasil = No
+    tidak = "" if result == "Yes" else "tidak"
 
-st.success(f"Hasil Prediksi Revenue: {result}")
-st.write(f"Konsumen berkemungkinan besar untuk {tidak} melanjutkan pembelian.")
+    st.success(f"Hasil Prediksi Revenue: {result}")
+    st.write(f"Kesimpulan: Konsumen berkemungkinan besar untuk {tidak} melanjutkan pembelian.")
 
 
