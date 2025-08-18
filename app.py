@@ -3,12 +3,9 @@ import joblib
 import numpy as np
 import pandas as pd
 
-# Load model
-@st.cache_resource
-def load_model():
-    return joblib.load("XGB-Model1.pkl")
-
-model = load_model()
+# Load models
+rf_model = joblib.load("RF-Model1.pkl")
+xgb_model = joblib.load("XGB-Model1.pkl")
 
 st.title("Prediksi Revenue E-Commerce")
 
@@ -43,13 +40,37 @@ Month_encoded = Month_map[Month]
 VisitorType_encoded = VisitorType_map[VisitorType]
 Weekend_encoded = Weekend_map[Weekend]
 
-# Button untuk prediksi
-if st.button("Prediksi Revenue"):
-    features = np.array([[Administrative, Administrative_Duration, Informational, Informational_Duration,
-                          ProductRelated, ProductRelated_Duration, BounceRates, ExitRates, PageValues,
-                          SpecialDay, Month_encoded, OperatingSystems, Browser, Region, TrafficType,
-                          VisitorType_encoded, Weekend_encoded]])
+# Data input untuk model
+input_data = np.array([[Administrative, Administrative_Duration, Informational, Informational_Duration,
+                        ProductRelated, ProductRelated_Duration, BounceRates, ExitRates, PageValues,
+                        SpecialDay, Month_encoded, OperatingSystems, Browser, Region, TrafficType,
+                        VisitorType_encoded, Weekend_encoded]])
 
-    prediction = model.predict(features)
-    result = "Yes" if prediction[0] == 1 else "No"
-    st.success(f"Hasil Prediksi Revenue: {result}")
+if st.button("Prediksi"):
+    st.subheader("Hasil Prediksi")
+
+    models = {
+        "Random Forest": rf_model,
+        "XGBoost": xgb_model,
+    }
+
+    yes_count = 0
+    no_count = 0
+
+    for name, model in models.items():
+        pred = model.predict(input_data)[0]
+        proba = model.predict_proba(input_data)[0][1] * 100
+        result = "Yes" if pred == 1 else "No"
+
+        if result == "Yes":
+            yes_count += 1
+        else:
+            no_count += 1
+
+        st.write(f"**{name}** → {result} dengan persentase ({proba:.2f}%)")
+
+    # Kesimpulan
+    if yes_count > no_count:
+        st.success("Kesimpulan: Konsumen berkemungkinan besar untuk melanjutkan pembelian.")
+    else:
+        st.error("Kesimpulan: Konsumen berkemungkinan besar untuk **tidak** melanjutkan pembelian.")
