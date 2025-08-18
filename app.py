@@ -55,8 +55,9 @@ if st.button("Prediksi Revenue"):
 
     # Tentukan kata "tidak" hanya jika hasil = No
     tidak = "" if result == "Yes" else "tidak"
-
-    st.success(f"Hasil Prediksi Revenue: {result}")
-    st.write(f"Kesimpulan: Konsumen berkemungkinan besar untuk {tidak} melanjutkan pembelian.")
+    if prediction[0] == 1:
+        st.success(f"Konsumen berkemungkinan besar untuk {tidak} melanjutkan pembelian.")
+    else:
+        st.error(f"Konsumen berkemungkinan besar untuk {tidak} melanjutkan pembelian.")
 
 
