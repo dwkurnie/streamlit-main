@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 
 # Load models
-rf_model = joblib.load("RF-Model8.pkl")
-xgb_model = joblib.load("XGB-Model8.pkl")
+rf_model = joblib.load("RF-Model1.pkl")
+xgb_model = joblib.load("XGB-Model1.pkl")
 
 st.title("Prediksi Revenue E-Commerce")
 
