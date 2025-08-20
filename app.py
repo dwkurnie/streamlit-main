@@ -6,7 +6,7 @@ import pandas as pd
 # Load model
 @st.cache_resource
 def load_model():
-    return joblib.load("XGB-Model1.pkl")
+    return joblib.load("RF-Model1.pkl")
 
 model = load_model()
 
